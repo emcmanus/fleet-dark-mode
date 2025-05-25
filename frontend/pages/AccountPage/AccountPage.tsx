@@ -3,6 +3,7 @@ import { InjectedRouter } from "react-router";
 
 import { AppContext } from "context/app";
 import { NotificationContext } from "context/notification";
+import { useTheme } from "context/theme";
 import { IUser } from "interfaces/user";
 import usersAPI from "services/entities/users";
 import { authToken } from "utilities/local";
@@ -35,8 +36,9 @@ interface IAccountPageProps {
 }
 
 const AccountPage = ({ router }: IAccountPageProps): JSX.Element | null => {
-  const { config, currentUser } = useContext(AppContext);
+  const { config, currentUser, userSettings } = useContext(AppContext);
   const { renderFlash } = useContext(NotificationContext);
+  const { isDarkMode, setDarkMode } = useTheme();
 
   const [pendingEmail, setPendingEmail] = useState("");
   const [showEmailModal, setShowEmailModal] = useState(false);
@@ -44,6 +46,19 @@ const AccountPage = ({ router }: IAccountPageProps): JSX.Element | null => {
   const [updatedUser, setUpdatedUser] = useState<Partial<IUser>>({});
   const [showApiTokenModal, setShowApiTokenModal] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+  // Initialize dark mode from user settings if available
+  React.useEffect(() => {
+    if (userSettings?.dark_mode !== undefined && userSettings.dark_mode !== isDarkMode) {
+      setDarkMode(userSettings.dark_mode);
+    }
+  }, [userSettings?.dark_mode, isDarkMode, setDarkMode]);
+
+  const handleDarkModeChange = (enabled: boolean) => {
+    setDarkMode(enabled);
+    // TODO: We could immediately sync this to the server if desired
+    // For now, it will be saved when the user clicks "Update"
+  };
 
   const onCancel = (evt: React.MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
@@ -82,6 +97,11 @@ const AccountPage = ({ router }: IAccountPageProps): JSX.Element | null => {
     }
 
     const updated = deepDifference(formData, currentUser);
+    
+    // Include dark mode preference in the update
+    if (isDarkMode !== (userSettings?.dark_mode || false)) {
+      updated.dark_mode = isDarkMode;
+    }
 
     if (updated.email && !updated.password) {
       return onToggleEmailModal(updated);
@@ -230,6 +250,8 @@ const AccountPage = ({ router }: IAccountPageProps): JSX.Element | null => {
               pendingEmail={pendingEmail}
               serverErrors={errors}
               smtpConfigured={config?.smtp_settings?.configured || false}
+              darkMode={isDarkMode}
+              onDarkModeChange={handleDarkModeChange}
             />
           </div>
           {renderEmailModal()}

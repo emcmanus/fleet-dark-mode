@@ -1,0 +1,90 @@
+.dark-mode-toggle {
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--color-border-primary, #{$ui-fleet-black-10});
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-text-primary, #{$core-fleet-black});
+  }
+
+  &__label {
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  // Toggle switch styles
+  position: relative;
+  width: 44px;
+  height: 24px;
+  background-color: var(--color-border-secondary, #{$ui-fleet-black-25});
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  padding: 0;
+
+  &:hover:not(&--disabled) {
+    background-color: var(--color-border-primary, #{$ui-fleet-black-33});
+  }
+
+  &:focus {
+    outline: 2px solid var(--color-interactive-primary, #{$core-vibrant-blue});
+    outline-offset: 2px;
+  }
+
+  &__slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 12px;
+    transition: background-color 0.2s ease;
+  }
+
+  &__thumb {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    background-color: var(--color-surface-primary, #{$core-fleet-white});
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+
+  // Active/On state
+  &--on {
+    background-color: var(--color-interactive-primary, #{$core-vibrant-blue});
+
+    &:hover:not(.dark-mode-toggle--disabled) {
+      background-color: var(--color-interactive-primary-hover, #{$core-vibrant-blue-over});
+    }
+
+    .dark-mode-toggle__thumb {
+      transform: translateX(20px);
+    }
+  }
+
+  // Disabled state
+  &--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: var(--color-border-secondary, #{$ui-fleet-black-25});
+    }
+
+    &.dark-mode-toggle--on:hover {
+      background-color: var(--color-interactive-primary, #{$core-vibrant-blue});
+    }
+  }
+}

@@ -5,6 +5,7 @@ import Button from "components/buttons/Button";
 import Form from "components/forms/Form";
 import formFieldInterface from "interfaces/form_field";
 import InputField from "components/forms/fields/InputField";
+import DarkModeToggle from "components/forms/fields/DarkModeToggle";
 import validate from "components/forms/UserSettingsForm/validate";
 
 const formFields = ["email", "name", "position", "username"];
@@ -22,6 +23,8 @@ class UserSettingsForm extends Component {
     pendingEmail: PropTypes.string,
     onCancel: PropTypes.func.isRequired,
     smtpConfigured: PropTypes.bool,
+    darkMode: PropTypes.bool,
+    onDarkModeChange: PropTypes.func,
   };
 
   renderEmailHelpText = () => {
@@ -39,7 +42,7 @@ class UserSettingsForm extends Component {
   };
 
   render() {
-    const { fields, handleSubmit, onCancel, smtpConfigured } = this.props;
+    const { fields, handleSubmit, onCancel, smtpConfigured, darkMode, onDarkModeChange } = this.props;
     const { renderEmailHelpText } = this;
 
     return (
@@ -76,6 +79,17 @@ class UserSettingsForm extends Component {
           }}
         />
         <InputField {...fields.position} label="Position" />
+        
+        {/* Dark Mode Toggle */}
+        {onDarkModeChange && (
+          <div className={`${baseClass}__preference-setting`}>
+            <DarkModeToggle
+              value={darkMode || false}
+              onChange={onDarkModeChange}
+            />
+          </div>
+        )}
+        
         <div className="button-wrap">
           <Button onClick={onCancel} variant="inverse">
             Cancel

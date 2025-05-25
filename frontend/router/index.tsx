@@ -89,6 +89,7 @@ import PATHS from "router/paths";
 
 import AppProvider from "context/app";
 import RoutingProvider from "context/routing";
+import { ThemeProvider } from "context/theme";
 
 import AuthGlobalAdminRoutes from "./components/AuthGlobalAdminRoutes";
 import AuthAnyAdminRoutes from "./components/AuthAnyAdminRoutes";
@@ -121,9 +122,11 @@ const AppWrapper = ({ children, location }: IAppWrapperProps) => {
   return (
     <AppProvider>
       <RoutingProvider>
-        <CustomQueryClientProvider client={queryClient}>
-          <App location={location}>{children}</App>
-        </CustomQueryClientProvider>
+        <ThemeProvider>
+          <CustomQueryClientProvider client={queryClient}>
+            <App location={location}>{children}</App>
+          </CustomQueryClientProvider>
+        </ThemeProvider>
       </RoutingProvider>
     </AppProvider>
   );

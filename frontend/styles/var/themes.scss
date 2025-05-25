@@ -1,0 +1,83 @@
+// Theme CSS Custom Properties
+// These variables will be overridden in dark mode
+
+:root {
+  // Light theme colors (default)
+  --color-bg-primary: #{$core-fleet-white};
+  --color-bg-secondary: #{$ui-off-white};
+  --color-bg-tertiary: #{$ui-fleet-blue-10};
+  
+  --color-text-primary: #{$core-fleet-black};
+  --color-text-secondary: #{$ui-fleet-black-75};
+  --color-text-tertiary: #{$ui-fleet-black-50};
+  
+  --color-border-primary: #{$ui-fleet-black-10};
+  --color-border-secondary: #{$ui-fleet-black-25};
+  
+  --color-surface-primary: #{$core-fleet-white};
+  --color-surface-secondary: #{$ui-off-white};
+  --color-surface-elevated: #{$core-fleet-white};
+  
+  --color-shadow: #{$ui-shadow};
+  
+  // Status colors remain the same in both themes
+  --color-status-success: #{$ui-success};
+  --color-status-warning: #{$ui-warning};
+  --color-status-error: #{$ui-error};
+  --color-status-info: #{$ui-info};
+  
+  // Interactive colors
+  --color-interactive-primary: #{$core-vibrant-blue};
+  --color-interactive-primary-hover: #{$core-vibrant-blue-over};
+  --color-interactive-primary-active: #{$core-vibrant-blue-down};
+}
+
+// Dark theme overrides
+[data-theme="dark"] {
+  --color-bg-primary: #1a1d29;
+  --color-bg-secondary: #242937;
+  --color-bg-tertiary: #2d3142;
+  
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #b8bcc8;
+  --color-text-tertiary: #8b8fa2;
+  
+  --color-border-primary: #3d4152;
+  --color-border-secondary: #4a4d5a;
+  
+  --color-surface-primary: #1e2130;
+  --color-surface-secondary: #242937;
+  --color-surface-elevated: #2a2d3a;
+  
+  --color-shadow: rgba(0, 0, 0, 0.3);
+  
+  // Interactive colors remain vibrant in dark mode
+  --color-interactive-primary: #{$core-vibrant-blue};
+  --color-interactive-primary-hover: #{$core-vibrant-blue-over};
+  --color-interactive-primary-active: #{$core-vibrant-blue-down};
+}
+
+// Utility classes for theme-aware styling
+.theme-bg-primary {
+  background-color: var(--color-bg-primary);
+}
+
+.theme-bg-secondary {
+  background-color: var(--color-bg-secondary);
+}
+
+.theme-text-primary {
+  color: var(--color-text-primary);
+}
+
+.theme-text-secondary {
+  color: var(--color-text-secondary);
+}
+
+.theme-border-primary {
+  border-color: var(--color-border-primary);
+}
+
+.theme-surface-primary {
+  background-color: var(--color-surface-primary);
+}
